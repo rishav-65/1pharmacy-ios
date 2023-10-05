@@ -8,11 +8,11 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React, {useContext} from 'react';
-import {DynamicScreen, Home, LoginScreen} from './src/components/screens';
 import {
   AuthContext,
   AuthContextProvider,
-} from './src/components/displayBlocks/contextProviders';
+} from './src/services/contextProviders';
+import {DynamicScreen, Home, LoginScreen} from './src/components/screens';
 
 const Navigator = () => {
   const Stack = createNativeStackNavigator();
