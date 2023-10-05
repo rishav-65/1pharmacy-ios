@@ -8,25 +8,22 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React, {useContext} from 'react';
-import {
-  AuthContext,
-  AuthContextProvider,
-} from './src/services/contextProviders';
-import {DynamicScreen, Home, LoginScreen} from './src/components/screens';
+import {AuthContext, AuthContextProvider} from '@contextProviders';
+import {DynamicScreen, Home, LoginScreen} from '@screens';
 
-const Navigator = () => {
+const AppNavigator = () => {
   const Stack = createNativeStackNavigator();
 
   const {authStatus} = useContext(AuthContext);
 
   return (
     <NavigationContainer>
-      <Stack.Navigator
+      <Stack.AppNavigator
         initialRouteName={authStatus.loggedIn ? 'Home' : 'Login'}>
         <Stack.Screen name="DynamicScreen" component={DynamicScreen} />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Login" component={LoginScreen} />
-      </Stack.Navigator>
+      </Stack.AppNavigator>
     </NavigationContainer>
   );
 };
@@ -34,7 +31,7 @@ const Navigator = () => {
 function App(): JSX.Element {
   return (
     <AuthContextProvider>
-      <Navigator />
+      <AppNavigator />
     </AuthContextProvider>
   );
 }
