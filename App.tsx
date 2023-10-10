@@ -18,12 +18,12 @@ const AppNavigator = () => {
 
   return (
     <NavigationContainer>
-      <Stack.AppNavigator
+      <Stack.Navigator
         initialRouteName={authStatus.loggedIn ? 'Home' : 'Login'}>
         <Stack.Screen name="DynamicScreen" component={DynamicScreen} />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Login" component={LoginScreen} />
-      </Stack.AppNavigator>
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };
