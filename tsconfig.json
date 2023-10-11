@@ -3,9 +3,11 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@Containers/*": ["./src/components/displayBlocks/Containers/*"],
-      "@DynamicViewHandler/*": ["./src/components/displayBlocks/DynamicViewHandler/*"],
-      "@HouseOfCards/*": ["./src/components/displayBlocks/HouseOfCards/*"]
+      "@Containers": ["./src/components/displayBlocks/Containers"],
+      "@DynamicViewHandler": ["./src/components/displayBlocks/DynamicViewHandler"],
+      "@HouseOfCards": ["./src/components/displayBlocks/HouseOfCards"],
+      "@screens": ["./src/components/screens"],
+      "@contextProviders": ["./src/services/contextProviders"]
     }
   }
 }
