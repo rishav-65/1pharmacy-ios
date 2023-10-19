@@ -10,8 +10,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useContext } from 'react';
 import { AuthContext, AuthContextProvider } from '@contextProviders';
 import { DynamicScreen, Home, LoginScreen, VerifyOTP } from '@screens';
-import { SafeAreaView } from 'react-native';
 import { NativeBaseProvider } from 'native-base';
+import APIContextProvider from 'src/services/contextProviders/APIProvider';
 
 const AppNavigator = () => {
   const Stack = createNativeStackNavigator();
@@ -56,7 +56,9 @@ function App(): JSX.Element {
   return (
     <NativeBaseProvider>
       <AuthContextProvider>
-        <AppNavigator />
+        <APIContextProvider>
+          <AppNavigator />
+        </APIContextProvider>
       </AuthContextProvider>
     </NativeBaseProvider>
   );
