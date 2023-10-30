@@ -2,27 +2,45 @@ import React from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { Button, Heading, Image, Input, KeyboardAvoidingView, Text, VStack } from 'native-base';
 import { useToast } from 'native-base';
+import { APIContext, ToastContext } from '@contextProviders';
+import { getURL } from '@APIRepository';
+import { NavigationProp } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from 'App';
+import { requestOTP } from '@auth';
+import { ToastProfiles, getCustomToastProfile } from '@ToastProfiles';
 
-const LoginScreen = (props) => {
+const styles = StyleSheet.create({
+});
+
+const LoginScreen = (props: NativeStackScreenProps<RootStackParamList, 'Login'>) => {
   const [phone, setPhone] = React.useState('');
 
-  const toast = useToast();
+  const { APIPost } = React.useContext(APIContext);
+
+  const { showToast } = React.useContext(ToastContext);
 
   const submitPhone = () => {
     if (!phone || phone === '' || phone.length < 10) {
-      toast.show({
-        render: () => {
-          return <View style={styles.errorToast}>
-            <Text style={styles.errorToastText}>
-              Please enter a valid phone number.
-            </Text>
-          </View>;
-        },
-        placement: 'top'
-      })
-      return
+      showToast(getCustomToastProfile({
+        title: 'Please enter a valid phone number.',
+        template: 'error'
+      }))
+
+      return;
     }
-    props.navigation.push('VerifyOTP', {phone})
+
+    requestOTP(phone).then(response => {
+      if (response?.data?.otpSent === true) {
+        showToast({...ToastProfiles.success, title: 'OTP Sent!'})
+      } else {
+        throw response
+      }
+
+      props.navigation.push('VerifyOTP', { phone })
+    }).catch(error => {
+      showToast(ToastProfiles.error)
+    })
   }
 
   return <>
@@ -44,15 +62,3 @@ const LoginScreen = (props) => {
   </>;
 };
 export default LoginScreen;
-
-const styles = StyleSheet.create({
-  errorToast: {
-    backgroundColor: '#fb3640',
-    borderRadius: 4,
-    paddingVertical: 7,
-    paddingHorizontal: 10
-  },
-  errorToastText: {
-    color: '#ffffff'
-  }
-});

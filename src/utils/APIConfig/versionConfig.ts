@@ -1,6 +1,6 @@
 export const serverVersions = {
-    test: {
-        baseURL: 'https://ros.1pharmacy.io/bprod/'
+    bprod: {
+        baseURL: 'https://apiv2.1pharmacy.io/bprod/'
     }
 };
 

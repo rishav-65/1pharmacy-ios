@@ -11,6 +11,7 @@ async function APIFetch({ method, url, body, customHeaders }: APIBaseParams) {
     Connection: 'Keep-Alive',
     'Accept-Encoding': 'gzip',
     'User-Agent': 'okhttp/3.12.0',
+    'X-Web-Version': '3306',
     ...customHeaders
   };
 
@@ -28,8 +29,8 @@ async function APIFetch({ method, url, body, customHeaders }: APIBaseParams) {
     );
   }
 
-  const responseData = await response.json();
-  return responseData;
+  return response;
+
 }
 
 export default APIFetch;

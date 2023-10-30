@@ -1,30 +1,39 @@
+import { setUserSessions } from '@auth';
 import React from 'react';
 
 type AuthStatus = {
   loggedIn: boolean;
-  loggedInUser: {} | null;
+  loggedInUser: any | null;
   authToken: string | null;
 };
 
-const initialState: {authStatus: AuthStatus; setAuthStatus: Function} = {
+const initialState: { authStatus: AuthStatus; setLoggedInUser: Function } = {
   authStatus: {
     loggedIn: false,
     loggedInUser: null,
     authToken: null,
   },
-  setAuthStatus: (_authStatus: AuthStatus) => {},
+  setLoggedInUser: (sessions: Array<any>) => { },
 };
 
 export const AuthContext = React.createContext(initialState);
 
-const AuthContextProvider = (props: {children: React.ReactNode}) => {
+const AuthContextProvider = (props: { children: React.ReactNode }) => {
   const [authStatus, setAuthStatus] = React.useState(initialState.authStatus);
+
+  const setLoggedInUser = (sessions: Array<any>) => {
+    setUserSessions(sessions).then(activeSession => setAuthStatus({
+      loggedIn: true,
+      loggedInUser: activeSession,
+      authToken: activeSession['session-token']
+    }))
+  }
 
   return (
     <AuthContext.Provider
       value={{
         authStatus,
-        setAuthStatus,
+        setLoggedInUser,
       }}>
       {props.children}
     </AuthContext.Provider>
