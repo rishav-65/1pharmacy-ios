@@ -15,7 +15,6 @@ import { NativeBaseProvider } from 'native-base';
 export type RootStackParamList = {
   DynamicScreen: undefined;
   Home: undefined;
-  Login: undefined;
   VerifyOTP: { phone: number | string };
 };
 
@@ -24,7 +23,6 @@ type RouteDefinition = {
   component:
   | React.FC<NativeStackScreenProps<RootStackParamList, 'DynamicScreen'>>
   | React.FC<NativeStackScreenProps<RootStackParamList, 'Home'>>
-  | React.FC<NativeStackScreenProps<RootStackParamList, 'Login'>>
   | React.FC<NativeStackScreenProps<RootStackParamList, 'VerifyOTP'>>
   | undefined;
 };
@@ -32,19 +30,11 @@ type RouteDefinition = {
 const AppNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
 
-  const { authStatus } = useContext(AuthContext);
+  const { authStatus, localAuthFetched } = useContext(AuthContext);
 
-  const routes: RouteDefinition[] = [
-    {
-      name: 'DynamicScreen',
-      component: DynamicScreen
-    },
+  const publicRoutes: RouteDefinition[] = [
     {
       name: 'Home',
-      component: Home
-    },
-    {
-      name: 'Login',
       component: LoginScreen
     },
     {
@@ -53,15 +43,28 @@ const AppNavigator = () => {
     },
   ]
 
+  const privateRoutes: RouteDefinition[] = [
+    {
+      name: 'DynamicScreen',
+      component: DynamicScreen
+    },
+    {
+      name: 'Home',
+      component: Home
+    }
+  ]
+
+  const activeRoutes: RouteDefinition[] = localAuthFetched ? (authStatus.loggedIn ? privateRoutes : publicRoutes) : []
+
   return (
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
           headerShown: false
         }}
-        initialRouteName={authStatus.loggedIn ? 'Home' : 'Login'}>
+        initialRouteName={'Home'}>
         {
-          routes.map(route => (<Stack.Screen key={route.name} name={route.name as keyof RootStackParamList} component={route.component as React.FC<NativeStackScreenProps<RootStackParamList, typeof route.name>>} />))
+          activeRoutes.map(route => (<Stack.Screen key={route.name} name={route.name as keyof RootStackParamList} component={route.component as React.FC<NativeStackScreenProps<RootStackParamList, typeof route.name>>} />))
         }
       </Stack.Navigator>
     </NavigationContainer>

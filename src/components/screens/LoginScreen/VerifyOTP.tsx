@@ -46,7 +46,6 @@ const VerifyOTP = (props: NativeStackScreenProps<RootStackParamList, 'VerifyOTP'
 
                 showToast(ToastProfiles.success)
 
-                props.navigation.push('Home')
             }).catch(error => {
                 showToast(ToastProfiles.error)
             })

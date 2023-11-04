@@ -7,10 +7,10 @@ import {SafeAreaView} from 'react-native';
 
 const Home = (props: NativeStackScreenProps<RootStackParamList, 'Home'>) => {
 
-  const { authStatus } = React.useContext(AuthContext);
+  const { authStatus, setActiveSession } = React.useContext(AuthContext);
 
   return <SafeAreaView>
-    <View style={{
+    {/* <View style={{
       width: '100%',
       padding:2,
       alignItems: 'center',
@@ -20,8 +20,17 @@ const Home = (props: NativeStackScreenProps<RootStackParamList, 'Home'>) => {
         color: '#FFFFFF'
       }}>
         {authStatus.loggedInUser?.userData?.name as string}
+        {authStatus.loggedInUser?.userData?.company as string}
       </Text>
-    </View>
+      <View padding = {2}>
+        {authStatus.sessions?.map((session, index) => (
+          <View marginX={2} marginY={1}>
+            <Text onPress={()=>setActiveSession(index)} marginY={1} color="#FFFFFF">{session.userData.name}</Text>
+            <Text marginY={1} color="#FFFFFF">{session.userData.company}</Text>
+          </View>
+        ))}
+      </View>
+    </View> */}
   </SafeAreaView>;
 };
 

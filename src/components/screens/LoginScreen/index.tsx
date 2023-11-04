@@ -13,7 +13,7 @@ import { ToastProfiles, getCustomToastProfile } from '@ToastProfiles';
 const styles = StyleSheet.create({
 });
 
-const LoginScreen = (props: NativeStackScreenProps<RootStackParamList, 'Login'>) => {
+const LoginScreen = (props: NativeStackScreenProps<RootStackParamList, 'Home'>) => {
   const [phone, setPhone] = React.useState('');
 
   const { APIPost } = React.useContext(APIContext);
