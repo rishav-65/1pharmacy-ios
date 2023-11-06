@@ -1,6 +1,6 @@
 export type APIBaseParams = { method: string, url: string, body?: any | undefined, customHeaders?: any | undefined }
 
-export type PromiseHandlers = { resolve: Function | undefined, reject: Function | undefined }
+export type PromiseHandlers = { resolve?: Function | undefined, reject?: Function | undefined }
 
 export type APIGetParams = Omit<APIBaseParams & PromiseHandlers, "method" | "body">
 

@@ -1,6 +1,8 @@
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from 'App';
 import {View} from 'react-native';
 
-const DynamicScreen = () => {
+const DynamicScreen = (props: NativeStackScreenProps<RootStackParamList, 'DynamicScreen'>) => {
   return <View />;
 };
 
