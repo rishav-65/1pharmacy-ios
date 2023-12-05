@@ -10,13 +10,9 @@ import { RootStackParamList } from 'App';
 import { requestOTP } from '@auth';
 import { ToastProfiles, getCustomToastProfile } from '@ToastProfiles';
 
-const styles = StyleSheet.create({
-});
-
 const LoginScreen = (props: NativeStackScreenProps<RootStackParamList, 'Home'>) => {
   const [phone, setPhone] = React.useState('');
-
-  const { APIPost } = React.useContext(APIContext);
+  const [loading, setLoading] = React.useState(false);
 
   const { showToast } = React.useContext(ToastContext);
 
@@ -30,6 +26,8 @@ const LoginScreen = (props: NativeStackScreenProps<RootStackParamList, 'Home'>) 
       return;
     }
 
+    setLoading(true);
+
     requestOTP(phone).then(response => {
       if (response?.data?.otpSent === true) {
         showToast({...ToastProfiles.success, title: 'OTP Sent!'})
@@ -37,8 +35,11 @@ const LoginScreen = (props: NativeStackScreenProps<RootStackParamList, 'Home'>) 
         throw response
       }
 
+      setLoading(false);
+
       props.navigation.push('VerifyOTP', { phone })
     }).catch(error => {
+      setLoading(false);
       showToast(ToastProfiles.error)
     })
   }
@@ -47,13 +48,13 @@ const LoginScreen = (props: NativeStackScreenProps<RootStackParamList, 'Home'>) 
     <SafeAreaView>
       <KeyboardAvoidingView width="100%" behavior="padding">
         <VStack space={1} alignItems="center" justifyContent="flex-end" height="100%" padding={4}>
-          <Image source={require('@assets/1p_logo.png')} width={32} height={48} accessibilityLabel='1p_logo' marginBottom={32} />
+          <Image source={require('@assets/1p_logo.png')} width={32} height={48} accessibilityLabel='1p_logo' alt='1p_logo' marginBottom={32} />
           <Heading size="2xl" marginY={5}>Welcome!</Heading>
           <Input size="xl" mx="3" placeholder="Enter your mobile number" w="100%" value={phone} onChangeText={setPhone} />
           <Text textAlign="center" color="#a0a0a0" marginY={5}>
             By providing the phone number, I hereby agree and accept the <Text fontWeight="bold">Terms of Service</Text> and <Text fontWeight="bold">Privacy Policy</Text>
           </Text>
-          <Button onPress={submitPhone} width="100%" backgroundColor="#2364C8">
+          <Button isLoading={loading} onPress={submitPhone} width="100%" backgroundColor="#2364C8">
             Submit
           </Button>
         </VStack>

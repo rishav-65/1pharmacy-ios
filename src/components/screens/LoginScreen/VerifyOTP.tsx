@@ -55,7 +55,7 @@ const VerifyOTP = (props: NativeStackScreenProps<RootStackParamList, 'VerifyOTP'
 
     return <>
         <SafeAreaView>
-            <KeyboardAvoidingView width={"100%"} behavior="padding">
+            <KeyboardAvoidingView width="100%" behavior="padding">
                 <VStack alignItems="center" padding={4}>
                     <IconButton alignSelf="flex-start" colorScheme="indigo" variant="outline" icon={<ArrowBackIcon style={styles.backButtonIcon} />}
                         onPress={props.navigation.goBack}

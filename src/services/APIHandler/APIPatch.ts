@@ -11,7 +11,7 @@ const APIPatch = async (params: APIPatchParams) => {
             customHeaders: params.customHeaders
         })
 
-        const responseJSON = response.json();
+        const responseJSON = await response.json();
 
         (params.resolve || (() => { }))(responseJSON)
 

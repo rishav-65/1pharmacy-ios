@@ -11,7 +11,7 @@ const APIDelete = async (params: APIDeleteParams) => {
             customHeaders: params.customHeaders
         })
 
-        const responseJSON = response.json();
+        const responseJSON = await response.json();
 
         (params.resolve || (() => { }))(responseJSON)
 

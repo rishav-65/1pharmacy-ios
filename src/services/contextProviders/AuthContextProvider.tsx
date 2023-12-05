@@ -1,4 +1,5 @@
 import { getActiveUserSession, setActiveUserSessionIndex, setUserSessions } from '@auth';
+import { LoadingScreen } from '@commonComponents';
 import React from 'react';
 
 type AuthStatus = {
@@ -40,7 +41,9 @@ const AuthContextProvider = (props: { children: React.ReactNode }) => {
           activeSessionIndex,
           sessions
         })
+        setLocalAuthFetched(true)
       }
+      setLocalAuthFetched(true)
     })
   }, [])
 
@@ -68,10 +71,6 @@ const AuthContextProvider = (props: { children: React.ReactNode }) => {
   }
 
   React.useEffect(() => {
-    setLocalAuthFetched(true)
-  }, [authStatus.authToken])
-
-  React.useEffect(() => {
     const currentUser = authStatus.sessions && authStatus.sessions[authStatus.activeSessionIndex];
     if (!!currentUser) {
       setAuthStatus({
@@ -91,7 +90,7 @@ const AuthContextProvider = (props: { children: React.ReactNode }) => {
         logOut,
         localAuthFetched
       }}>
-      {localAuthFetched && props.children}
+      {localAuthFetched ? props.children : <LoadingScreen />}
     </AuthContext.Provider>
   );
 };
