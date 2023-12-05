@@ -22,16 +22,14 @@ const ToastProvider = (props: { children: React.ReactNode }) => {
   const toast = useToast();
 
   const showToast: ShowToastMethod = ({ title, description, containerStyle, titleStyle, descriptionStyle }) => toast.show({
-    render: () => {
-      return <View style={containerStyle}>
-        <Text style={titleStyle}>
-          {title}
-        </Text>
-        {description && <Text style={descriptionStyle || titleStyle}>
-          {description}
-        </Text>}
-      </View>;
-    },
+    render: () => (<View style={containerStyle}>
+      <Text style={titleStyle}>
+        {title}
+      </Text>
+      {description && <Text style={descriptionStyle || titleStyle}>
+        {description}
+      </Text>}
+    </View>),
     placement: 'top'
   })
 

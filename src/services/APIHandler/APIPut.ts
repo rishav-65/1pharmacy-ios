@@ -11,7 +11,7 @@ const APIPut = async (params: APIPutParams) => {
             customHeaders: params.customHeaders
         })
 
-        const responseJSON = response.json();
+        const responseJSON = await response.json();
 
         (params.resolve || (() => { }))(responseJSON)
 
