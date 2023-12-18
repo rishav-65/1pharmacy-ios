@@ -234,6 +234,11 @@ const PurchasesTabPanel = () => {
                         bottomTabsMounted
                         filtersEnabled
                         filters={quickFilters}
+                        floatingAction={{
+                            label: 'Create Purchase',
+                            icon: <AddIcon color="#FFFFFF" />,
+                            action: ()=>navigation.push('CreatePurchase')
+                        }}
                         selectedFilter={selectedFilter}
                         onFilterSelect={onFilterSelect}
                         onRefresh={onRefresh}
@@ -264,7 +269,7 @@ const PurchasesTabPanel = () => {
                         }
                     />
             }
-            {
+            {/* {
                 isFocused
                 && <Fab
                     placement="bottom-right"
@@ -275,7 +280,7 @@ const PurchasesTabPanel = () => {
                     style={{ ...P1Styles.shadow }}
                     onPress={()=>navigation.push('CreatePurchase')}
                 />
-            }
+            } */}
         </View>
     );
 }

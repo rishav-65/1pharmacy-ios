@@ -23,7 +23,7 @@ const BottomActionSheet = (props: any) => {
             borderRadius: 30,
             ...(props.handleContainerStyle || {})
         }} underlayColor="#EFEFEF" onPress={openSheet}>{props.handle}</TouchableHighlight>
-        <Actionsheet isOpen={isOpen} onClose={onClose} bottom={(bottomInset > 0) ? bottomInset + 130 : bottomInset}>
+        <Actionsheet isOpen={isOpen} onClose={onClose} zIndex={1000000} bottom={(bottomInset > 0) ? bottomInset + 130 : bottomInset}>
             <Actionsheet.Content style={props.actionSheetStyle}>
                 {
                     isOpen

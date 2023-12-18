@@ -192,6 +192,11 @@ const SalesTabPanel = () => {
                         bottomTabsMounted
                         filtersEnabled
                         filters={quickFilters}
+                        floatingAction={{
+                            label: 'Create Bill',
+                            icon: <AddIcon color="#FFFFFF" />,
+                            action: ()=>navigation.push('CreateBill')
+                        }}
                         selectedFilter={selectedFilter}
                         onFilterSelect={onFilterSelect}
                         onRefresh={onRefresh}
@@ -222,7 +227,7 @@ const SalesTabPanel = () => {
                         }
                     />
             }
-            {
+            {/* {
                 isFocused
                 && <Fab
                     placement="bottom-right"
@@ -233,7 +238,7 @@ const SalesTabPanel = () => {
                     style={{ ...P1Styles.shadow }}
                     onPress={()=>navigation.push('CreateBill')}
                 />
-            }
+            } */}
         </View>
     );
 }

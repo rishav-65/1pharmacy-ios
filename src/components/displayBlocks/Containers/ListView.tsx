@@ -1,7 +1,7 @@
 import P1Styles from "@P1StyleSheet";
-import { FlatList, IconButton, Input, ScrollView, SearchIcon, SectionList, Text, View } from "native-base";
-import React, { ExoticComponent, ReactNode } from "react";
-import { RefreshControl, StyleSheet } from "react-native";
+import { Button, FlatList, HStack, Input, ScrollView, SearchIcon, SectionList, Text, View, useKeyboardBottomInset } from "native-base";
+import React from "react";
+import { Dimensions, RefreshControl, StyleSheet, TouchableOpacity } from "react-native";
 import { getCardByIndex } from "../HouseOfCards/CardsIndex";
 import HorizontalScrollableSection from "./HorizontalScrollableSection";
 import { useNavigation } from "@react-navigation/native";
@@ -10,14 +10,16 @@ import { RootStackParamList } from "App";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { BottomActionSheet, InfoScreen } from "@commonComponents";
 import { Chip } from "react-native-elements";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+const { height: windowHeight, width: windowWidth } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     searchBox: {
         backgroundColor: '#FFFFFF',
         borderRadius: 30,
-        marginHorizontal: 20,
-        marginTop: 10,
-        ...P1Styles.shadow
+        marginRight: 5,
+        flex: 5
     },
     summarySection: {
         marginTop: 2,
@@ -48,7 +50,7 @@ const styles = StyleSheet.create({
         marginLeft: 10
     },
     screenEndBuffer: {
-        height: 350
+        height: 500
     },
     filterIcon: {
         margin: 5
@@ -74,6 +76,23 @@ const styles = StyleSheet.create({
     },
     listContentContainer: {
         paddingBottom: 900
+    },
+    floatingPanel: {
+        position: 'absolute',
+        width: windowWidth - 40,
+        marginHorizontal: 20,
+        ...P1Styles.shadowLarge
+    },
+    floatingAction: {
+        backgroundColor: '#2E6ACF',
+        height: 40,
+        width: 40,
+        borderRadius: 30,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingHorizontal: 15,
+        paddingVertical: 10,
     }
 })
 
@@ -104,6 +123,8 @@ const ListView = (props: any) => {
                     : 0
             )
     );
+
+    const bottomInset = useKeyboardBottomInset();
 
     const searchEnabled = (props.searchEnabled == false) ? false : true;
 
@@ -161,25 +182,14 @@ const ListView = (props: any) => {
         }
     }, [searchKeyword])
 
+    const { bottom } = useSafeAreaInsets();
+
+    const tabBarTop = 60 + ((bottom > 0) ? (bottom + 15) : 0);
+
+    const floatingPanelTop = windowHeight - (props.bottomTabsMounted ? (tabBarTop + 35) : 20) - (props.summaryBlocks ? 100 : 0);
+
     return (
         <>
-            {
-                searchEnabled
-                && <View style={styles.searchBox}>
-                    <Input
-                        borderColor='transparent'
-                        size="xl"
-                        placeholder={props.searchPlaceholder || 'Search'}
-                        w="100%"
-                        value={searchKeyword} onChangeText={setSearchKeyword}
-                        InputLeftElement={<SearchIcon style={styles.searchIcon} />}
-                        _focus={{
-                            borderColor: 'transparent',
-                            backgroundColor: 'transparent',
-                        }}
-                    />
-                </View>
-            }
             <View {...((!searchEnabled && !summaryBlocks) ? { paddingTop: 3 } : {})}>
                 {
                     summaryBlocks &&
@@ -232,7 +242,7 @@ const ListView = (props: any) => {
                             props.sections
                                 ? <SectionList
                                     refreshControl={
-                                        <RefreshControl refreshing={refreshing} onRefresh={()=>props.onRefresh(setRefreshing)} />
+                                        <RefreshControl refreshing={refreshing} onRefresh={() => props.onRefresh(setRefreshing)} />
                                     }
                                     contentContainerStyle={styles.listContentContainer}
                                     sections={props.sections.map((section: any) => (
@@ -255,7 +265,7 @@ const ListView = (props: any) => {
                                 />
                                 : <FlatList
                                     refreshControl={
-                                        <RefreshControl refreshing={refreshing} onRefresh={()=>props.onRefresh(setRefreshing)} />
+                                        <RefreshControl refreshing={refreshing} onRefresh={() => props.onRefresh(setRefreshing)} />
                                     }
                                     contentContainerStyle={styles.listContentContainer}
                                     data={displayList}
@@ -272,6 +282,31 @@ const ListView = (props: any) => {
 
                 <View style={styles.screenEndBuffer} />
             </View>
+            {
+                searchEnabled
+                && <HStack alignItems="center" style={{ ...styles.floatingPanel, top: ((bottomInset > 0) ? (floatingPanelTop - (bottomInset + 65)) : floatingPanelTop) }}>
+                    <View style={styles.searchBox}>
+                        <Input
+                            borderColor='transparent'
+                            size="xl"
+                            placeholder={props.searchPlaceholder || 'Search'}
+                            w="100%"
+                            value={searchKeyword} onChangeText={setSearchKeyword}
+                            InputLeftElement={<SearchIcon style={styles.searchIcon} />}
+                            _focus={{
+                                borderColor: 'transparent',
+                                backgroundColor: 'transparent',
+                            }}
+                        />
+                    </View>
+                    {
+                        props.floatingAction
+                        && <TouchableOpacity style={styles.floatingAction} onPress={props.floatingAction.action}>
+                            {props.floatingAction.icon}
+                        </TouchableOpacity>
+                    }
+                </HStack>
+            }
         </>
     );
 }

@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
         margin: 10,
         height: 60,
         borderRadius: 30,
-        ...P1Styles.shadow
+        ...P1Styles.shadowLarge
     },
     tabBarFAB: {
         backgroundColor: '#2E6ACF',
