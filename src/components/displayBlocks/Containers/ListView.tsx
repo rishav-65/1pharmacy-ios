@@ -14,7 +14,7 @@ import { Chip } from "react-native-elements";
 const styles = StyleSheet.create({
     searchBox: {
         backgroundColor: '#FFFFFF',
-        borderRadius: 12,
+        borderRadius: 30,
         marginHorizontal: 20,
         marginTop: 10,
         ...P1Styles.shadow
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
         marginVertical: 2.5
     },
-    serchIcon: {
+    searchIcon: {
         marginLeft: 10
     },
     screenEndBuffer: {
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start'
     },
     actionSheetTitle: {
-        color: '#000000',
+        color: '#3C3C3C',
         fontWeight: '700',
         fontSize: 22,
         marginVertical: 10
@@ -172,7 +172,11 @@ const ListView = (props: any) => {
                         placeholder={props.searchPlaceholder || 'Search'}
                         w="100%"
                         value={searchKeyword} onChangeText={setSearchKeyword}
-                        InputLeftElement={<SearchIcon style={styles.serchIcon} />}
+                        InputLeftElement={<SearchIcon style={styles.searchIcon} />}
+                        _focus={{
+                            borderColor: 'transparent',
+                            backgroundColor: 'transparent',
+                        }}
                     />
                 </View>
             }

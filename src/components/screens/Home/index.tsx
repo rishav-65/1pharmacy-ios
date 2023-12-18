@@ -2,15 +2,16 @@ import { BottomActionSheet } from '@commonComponents';
 import { AuthContext } from '@contextProviders';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from 'App';
-import { Box, ChevronDownIcon, FavouriteIcon, HStack, HamburgerIcon, IconButton, MoonIcon, StatusBar, Text, View } from 'native-base';
+import { AddIcon, Box, ChevronDownIcon, Fab, HStack, IconButton, StatusBar, Text, View } from 'native-base';
 import React from 'react';
-import { StyleSheet, TouchableHighlight } from 'react-native';
+import { StyleSheet, TouchableHighlight, TouchableOpacity } from 'react-native';
 import HomeTabs from './HomeTabs';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import P1Styles from '@P1StyleSheet';
 
 const styles = StyleSheet.create({
   userName: {
-    color: '#000000',
+    color: '#3C3C3C',
     fontWeight: '600',
     fontSize: 22,
     marginRight: 5
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start'
   },
   accountListTitle: {
-    color: '#000000',
+    color: '#3C3C3C',
     fontWeight: '700',
     fontSize: 22,
     marginVertical: 10

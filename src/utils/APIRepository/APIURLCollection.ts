@@ -14,7 +14,12 @@ const APIURLCollection: { [key: string]: string | number } = {
     ORDER_ENTRY: 'convert_order_bill',
     NEW_STOCK: 'new_stock_dashboard',
     NEW_SALES_DASHBOARD: 'new_sales_dashboard',
-    NEW_PURCHASE_DASHBOARD: 'new_purchase_dashboard'
+    NEW_PURCHASE_DASHBOARD: 'new_purchase_dashboard',
+    SEARCH_SALES_ITEM: 'search_sales_item',
+    SKU_STOCK: 'sku_stock',
+    STORE_CUSTOMERS: 'store_customers',
+    STORE_DOCTOR_LISTING: 'store_doctor_listing',
+    SUBMIT_BILL: 'submit_bill'
 };
 
 export const getURL = (options: GetURLOptions): string => {
