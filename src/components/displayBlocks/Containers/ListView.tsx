@@ -16,7 +16,7 @@ const { height: windowHeight, width: windowWidth } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     searchBox: {
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#2E6ACF',
         borderRadius: 30,
         flex: 1
     },
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
         marginVertical: 2.5
     },
     searchIcon: {
-        marginLeft: 10
+        marginLeft: 10,
     },
     screenEndBuffer: {
         height: 500
@@ -295,8 +295,9 @@ const ListView = (props: any) => {
                             size="xl"
                             placeholder={props.searchPlaceholder || 'Search'}
                             w="100%"
+                            placeholderTextColor="#FFFFFF"
                             value={searchKeyword} onChangeText={setSearchKeyword}
-                            InputLeftElement={<SearchIcon style={styles.searchIcon} />}
+                            InputLeftElement={<SearchIcon color="#FFFFFF" style={styles.searchIcon} />}
                             InputRightElement={
                                 props.floatingAction
                                     ? <View flex={1} alignItems="flex-end">
