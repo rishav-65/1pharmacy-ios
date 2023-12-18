@@ -473,7 +473,6 @@ const DashboardTabPanel = () => {
                         setMounted(true)
                     },
                     reject: (error: any) => {
-                        console.log(error)
                         onCompleteCallback()
                         showToast(ToastProfiles.error)
                         setMounted(true)

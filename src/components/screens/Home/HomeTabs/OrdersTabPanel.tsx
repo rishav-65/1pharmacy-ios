@@ -271,6 +271,7 @@ const OrdersTabPanel = () => {
                     : <ListView
                         title='Online Orders'
                         searchPlaceholder='Search Orders'
+                        bottomTabsMounted
                         filtersEnabled
                         filters={quickFilters}
                         selectedFilter={selectedFilter}

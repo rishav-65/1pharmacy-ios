@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     cardBase: {
         justifyContent: 'space-between',
         backgroundColor: '#FFFFFF',
-        borderRadius: 12,
+        borderRadius: 20,
         padding: 15,
         marginHorizontal: 20,
         marginVertical: 10,

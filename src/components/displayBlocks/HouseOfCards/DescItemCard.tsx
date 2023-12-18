@@ -8,7 +8,7 @@ const windowWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
     cardBase: {
         backgroundColor: '#FFFFFF',
-        borderRadius: 12,
+        borderRadius: 20,
         paddingTop: 10,
         marginHorizontal: 20,
         marginVertical: 10,
@@ -23,12 +23,12 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 15,
         fontWeight: '700',
-        maxWidth: 75 * (windowWidth - 80) / 100
+        maxWidth: 70 * (windowWidth - 80) / 100
     },
     subtitle: {
         fontSize: 15,
         fontWeight: '700',
-        maxWidth: 25 * (windowWidth - 80) / 100
+        maxWidth: 30 * (windowWidth - 80) / 100
     },
     descBlock: {
         flexDirection: 'row',
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     nestedListItem: {
         borderTopColor: '#E5E5E8',
         borderTopWidth: 1,
-        backgroundColor: '#F8F8F8',
+        backgroundColor: '#EFEFEF',
         padding: 10,
         paddingHorizontal: 20
     },
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         flexWrap: 'wrap',
         backgroundColor: '#E0E0E0',
-        borderRadius: 12
+        borderRadius: 20
     },
     nestedListTitle: {
         marginBottom: 5,
@@ -174,7 +174,7 @@ const DescItemCard = (props: any) => {
                     {
                         item.nestedList
                             ? (
-                                <TouchableHighlight style={styles.badgeHighlight} underlayColor="#00000000" onPress={collapsed ? expand : collapse}>
+                                <TouchableHighlight style={styles.badgeHighlight} underlayColor="#3C3C3C00" onPress={collapsed ? expand : collapse}>
                                     {item.badge}
                                 </TouchableHighlight>
                             )

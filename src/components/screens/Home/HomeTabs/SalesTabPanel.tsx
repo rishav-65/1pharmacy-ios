@@ -1,11 +1,16 @@
 import { getURL } from "@APIRepository";
 import { ListView } from "@Containers";
+import P1Styles from "@P1StyleSheet";
 import { ToastProfiles } from "@ToastProfiles";
 import { LoadingScreen } from "@commonComponents";
 import { APIContext, AuthContext, ToastContext } from "@contextProviders";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList } from "App";
 import moment from "moment";
-import { View } from "native-base";
+import { AddIcon, Fab, View } from "native-base";
 import { useContext, useEffect, useState } from "react";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const summaryProfile = [
     {
@@ -18,20 +23,20 @@ const summaryProfile = [
         title: 'Net Amount',
         key: 'totalNetAmount',
         card_id: 'card_6',
-        valueReducer: (value: number) => `₹ ${value.toLocaleString('en-US', {maximumFractionDigits:2})}`
+        valueReducer: (value: number) => `₹ ${value.toLocaleString('en-US', { maximumFractionDigits: 2 })}`
     },
     {
         title: 'Total Tax',
         key: 'totalTax',
         card_id: 'card_6',
-        valueReducer: (value: number) => `₹ ${value.toLocaleString('en-US', {maximumFractionDigits:2})}`
+        valueReducer: (value: number) => `₹ ${value.toLocaleString('en-US', { maximumFractionDigits: 2 })}`
     },
 ]
 
 const cardPropParser = (item: any) => ({
     id: item.id,
     title: `Bill: #${item.billedNo}`,
-    subtitle: `₹ ${item.netAmount}`,
+    subtitle: `₹ ${item.netAmount.toLocaleString('en-US', { maximumFractionDigits: 2 })}`,
     details: [
         `${moment.unix(item.billedOn).format('DD-MMM-YYYY | hh:mm A')}`,
         `Customer: ${item.name}`,
@@ -68,6 +73,11 @@ const SalesTabPanel = () => {
         from: Math.floor(moment().unix()),
         to: Math.floor(moment().unix())
     })
+    const { bottom } = useSafeAreaInsets();
+
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+    const isFocused = useIsFocused();
 
     const { APIGet } = useContext(APIContext);
 
@@ -76,9 +86,9 @@ const SalesTabPanel = () => {
     const { showToast } = useContext(ToastContext);
 
     const fetchRenderData = ({ onCompleteCallback, isRefreshing }: { onCompleteCallback?: Function, isRefreshing?: boolean }) => {
-        if(!isRefreshing){
+        if (!isRefreshing) {
             setLoading(true);
-        setSalesData({ ...salesData, loaded: false })
+            setSalesData({ ...salesData, loaded: false })
         }
         APIGet({
             url: getURL({
@@ -90,12 +100,12 @@ const SalesTabPanel = () => {
                 }
             }),
             resolve: (response: any) => {
-                if(!response.data){
+                if (!response.data) {
                     throw response;
                 }
 
                 setSalesData({ ...response.data, items: (response.data?.items || []).map((item: any) => ({ ...item, card_id: 'card_5' })), loaded: true });
-                
+
                 if (!mounted) {
                     setMounted(true);
                 }
@@ -104,7 +114,7 @@ const SalesTabPanel = () => {
             },
             reject: (error: any) => {
                 showToast(ToastProfiles.error)
-                
+
                 if (!mounted) {
                     setMounted(true);
                 }
@@ -166,7 +176,7 @@ const SalesTabPanel = () => {
     const onRefresh = (setRefreshing: Function) => {
         setRefreshing(true);
         fetchRenderData({
-            onCompleteCallback: ()=>setRefreshing(false),
+            onCompleteCallback: () => setRefreshing(false),
             isRefreshing: true
         })
     }
@@ -179,6 +189,7 @@ const SalesTabPanel = () => {
                     : <ListView
                         title='Sales'
                         searchPlaceholder='Search Sale'
+                        bottomTabsMounted
                         filtersEnabled
                         filters={quickFilters}
                         selectedFilter={selectedFilter}
@@ -209,7 +220,20 @@ const SalesTabPanel = () => {
                                 value: (item.valueReducer || ((value: number) => value))(salesData[item.key])
                             }))
                         }
-                    />}
+                    />
+            }
+            {
+                isFocused
+                && <Fab
+                    placement="bottom-right"
+                    bgColor="#2E6ACF"
+                    icon={<AddIcon color="#FFFFFF" />}
+                    label="New Sale"
+                    bottom={bottom + 75}
+                    style={{ ...P1Styles.shadow }}
+                    onPress={()=>navigation.push('CreateBill')}
+                />
+            }
         </View>
     );
 }

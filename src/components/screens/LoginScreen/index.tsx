@@ -30,7 +30,7 @@ const LoginScreen = (props: NativeStackScreenProps<RootStackParamList, 'Home'>) 
 
     requestOTP(phone).then(response => {
       if (response?.data?.otpSent === true) {
-        showToast({...ToastProfiles.success, title: 'OTP Sent!'})
+        showToast({ ...ToastProfiles.success, title: 'OTP Sent!' })
       } else {
         throw response
       }
@@ -46,11 +46,19 @@ const LoginScreen = (props: NativeStackScreenProps<RootStackParamList, 'Home'>) 
 
   return <>
     <SafeAreaView>
-      <KeyboardAvoidingView width="100%" behavior="padding">
+      <KeyboardAvoidingView width="100%" behavior="position">
         <VStack space={1} alignItems="center" justifyContent="flex-end" height="100%" padding={4}>
           <Image source={require('@assets/1p_logo.png')} width={32} height={48} accessibilityLabel='1p_logo' alt='1p_logo' marginBottom={32} />
           <Heading size="2xl" marginY={5}>Welcome!</Heading>
-          <Input size="xl" mx="3" placeholder="Enter your mobile number" w="100%" value={phone} onChangeText={setPhone} />
+          <Input
+            size="xl"
+            mx="3"
+            placeholder="Enter your mobile number"
+            w="100%"
+            value={phone}
+            onChangeText={setPhone}
+            keyboardType="numeric"
+          />
           <Text textAlign="center" color="#a0a0a0" marginY={5}>
             By providing the phone number, I hereby agree and accept the <Text fontWeight="bold">Terms of Service</Text> and <Text fontWeight="bold">Privacy Policy</Text>
           </Text>

@@ -1,12 +1,17 @@
 import { getURL } from "@APIRepository";
 import { ListView } from "@Containers";
+import P1Styles from "@P1StyleSheet";
 import { ToastProfiles } from "@ToastProfiles";
 import { LoadingScreen } from "@commonComponents";
 import { APIContext, AuthContext, ToastContext } from "@contextProviders";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList } from "App";
 import moment from "moment";
-import { Text, View } from "native-base";
+import { AddIcon, Fab, Text, View } from "native-base";
 import { useContext, useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const styles = StyleSheet.create({
     itemsQtyBadge: {
@@ -109,6 +114,11 @@ const PurchasesTabPanel = () => {
         from: Math.floor(moment().unix()),
         to: Math.floor(moment().unix())
     })
+    const { bottom } = useSafeAreaInsets();
+
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+    const isFocused = useIsFocused();
 
     const { APIGet } = useContext(APIContext);
 
@@ -208,7 +218,7 @@ const PurchasesTabPanel = () => {
     const onRefresh = (setRefreshing: Function) => {
         setRefreshing(true);
         fetchRenderData({
-            onCompleteCallback: ()=>setRefreshing(false),
+            onCompleteCallback: () => setRefreshing(false),
             isRefreshing: true
         })
     }
@@ -221,6 +231,7 @@ const PurchasesTabPanel = () => {
                     : <ListView
                         title='Purchases'
                         searchPlaceholder='Search Purchase'
+                        bottomTabsMounted
                         filtersEnabled
                         filters={quickFilters}
                         selectedFilter={selectedFilter}
@@ -241,9 +252,7 @@ const PurchasesTabPanel = () => {
                                 }
                             ]
                         }))}
-                        searchFilter={(keyword: string, item: any) => {
-                            return (((new RegExp(`^${keyword}`, 'i')).test(item.invoiceNo)))
-                        }}
+                        searchFilter={(keyword: string, item: any) => ((new RegExp(`^${keyword}`, 'i')).test(item.invoiceNo))}
                         cardPropParser={cardPropParser}
                         summaryBlocks={
                             summaryProfile.map((item: any) => ({
@@ -253,7 +262,20 @@ const PurchasesTabPanel = () => {
                                 value: (item.valueReducer || ((value: number) => value))(purchasesData[item.key])
                             }))
                         }
-                    />}
+                    />
+            }
+            {
+                isFocused
+                && <Fab
+                    placement="bottom-right"
+                    bgColor="#2E6ACF"
+                    icon={<AddIcon color="#FFFFFF" />}
+                    label="New Purchase"
+                    bottom={bottom + 75}
+                    style={{ ...P1Styles.shadow }}
+                    onPress={()=>navigation.push('CreatePurchase')}
+                />
+            }
         </View>
     );
 }

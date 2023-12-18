@@ -56,14 +56,11 @@ const TabScreen = (props: any) => {
                     throw response;
                 }
 
-                console.log(response.data.netAmount, response.data.totalAmount, response.data.discount, response.data.gst, JSON.stringify(response.data))
-
                 setData(parseDataByProfile(detailsDisplayProfile, response.data));
                 setMounted(true);
                 setLoading(false)
             },
             reject: (error: any) => {
-                console.log(error)
                 showToast(ToastProfiles.error)
                 setMounted(true)
             }
@@ -97,7 +94,7 @@ const TabScreen = (props: any) => {
         return <Box style={styles.tabBar}>
             {routes.map((route: any, i) => {
                 const color = index === i ? '#2E6ACF' : '#505050';
-                const borderColor = index === i ? '#2E6ACF' : '#00000000';
+                const borderColor = index === i ? '#2E6ACF' : '#3C3C3C00';
                 return <TouchableOpacity key={route.title + `${i}`}  onPress={() => setIndex(i)}>
                     <Box borderColor={borderColor} style={styles.tab} p={3}>
                         <Animated.Text style={{ color }}>
@@ -116,7 +113,7 @@ const TabScreen = (props: any) => {
             <HStack bg="#FFFFFF" px="1" py="2" justifyContent="space-between" alignItems="center" w="100%">
                 <HStack alignItems="center">
                     <IconButton icon={<ArrowBackIcon style={{ color: '#2E6ACF' }} />} onPress={props.navigation.goBack} />
-                    <Text color="#000000" fontSize="20" >
+                    <Text color="#3C3C3C" fontSize="20" >
                         {screenTitle}
                     </Text>
                 </HStack>

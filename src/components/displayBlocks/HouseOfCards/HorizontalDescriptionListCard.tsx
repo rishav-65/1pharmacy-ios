@@ -4,21 +4,22 @@ import { StyleSheet, TouchableOpacity } from "react-native";
 
 const styles = StyleSheet.create({
     cardBase: {
-        borderRadius: 12,
+        borderRadius: 20,
         marginHorizontal: 20,
         marginVertical: 10,
         backgroundColor: '#FFFFFF',
+        paddingBottom: 5,
         ...P1Styles.shadow,
-        paddingBottom: 5
     },
     cardHeader: {
         backgroundColor: '#2E6ACF',
-        borderTopLeftRadius: 12,
-        borderTopRightRadius: 12,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
         flexDirection: 'row',
         alignItems: 'center',
         padding: 10,
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        ...P1Styles.shadow,
     },
     cardHeadingContainer: {
         flexDirection: 'row',
@@ -27,7 +28,8 @@ const styles = StyleSheet.create({
     cardHeading: {
         color: '#FFFFFF',
         fontSize: 22,
-        fontWeight: '700',
+        lineHeight:24,
+        fontWeight: '500',
     },
     cardHeaderIcon: {
         color: '#FFFFFF',

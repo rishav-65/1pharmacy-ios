@@ -9,7 +9,7 @@ import { Linking, StyleSheet } from "react-native";
 const styles = StyleSheet.create({
     cardBase: {
         backgroundColor: '#FFFFFF',
-        borderRadius: 12,
+        borderRadius: 20,
         padding: 15,
         marginHorizontal: 20,
         marginVertical: 10,

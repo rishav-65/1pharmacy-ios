@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     cardBase: {
         flex: 1,
         backgroundColor: '#2E6ACF',
-        borderRadius: 12,
+        borderRadius: 20,
         marginLeft: 10,
         marginVertical: 10,
         ...P1Styles.shadow
