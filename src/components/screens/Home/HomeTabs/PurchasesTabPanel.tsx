@@ -235,8 +235,7 @@ const PurchasesTabPanel = () => {
                         filtersEnabled
                         filters={quickFilters}
                         floatingAction={{
-                            label: 'Create Purchase',
-                            icon: <AddIcon color="#FFFFFF" />,
+                            icon: <AddIcon color="#2E6ACF" />,
                             action: ()=>navigation.push('CreatePurchase')
                         }}
                         selectedFilter={selectedFilter}

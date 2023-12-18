@@ -18,8 +18,7 @@ const styles = StyleSheet.create({
     searchBox: {
         backgroundColor: '#FFFFFF',
         borderRadius: 30,
-        marginRight: 5,
-        flex: 5
+        flex: 1
     },
     summarySection: {
         marginTop: 2,
@@ -81,10 +80,10 @@ const styles = StyleSheet.create({
         position: 'absolute',
         width: windowWidth - 40,
         marginHorizontal: 20,
+        borderRadius: 30,
         ...P1Styles.shadowLarge
     },
     floatingAction: {
-        backgroundColor: '#2E6ACF',
         height: 40,
         width: 40,
         borderRadius: 30,
@@ -186,7 +185,7 @@ const ListView = (props: any) => {
 
     const tabBarTop = 60 + ((bottom > 0) ? (bottom + 15) : 0);
 
-    const floatingPanelTop = windowHeight - (props.bottomTabsMounted ? (tabBarTop + 35) : 20) - (props.summaryBlocks ? 100 : 0);
+    const floatingPanelTop = windowHeight - (props.bottomTabsMounted ? (tabBarTop + 40) : 20) - (props.summaryBlocks ? 100 : 0);
 
     return (
         <>
@@ -285,6 +284,11 @@ const ListView = (props: any) => {
             {
                 searchEnabled
                 && <HStack alignItems="center" style={{ ...styles.floatingPanel, top: ((bottomInset > 0) ? (floatingPanelTop - (bottomInset + 65)) : floatingPanelTop) }}>
+                    {/* <View px={3} flex={1}>
+                        <Text color="#A0A0A0" fontSize={16}>
+                            {props.title}
+                        </Text>
+                    </View> */}
                     <View style={styles.searchBox}>
                         <Input
                             borderColor='transparent'
@@ -293,18 +297,21 @@ const ListView = (props: any) => {
                             w="100%"
                             value={searchKeyword} onChangeText={setSearchKeyword}
                             InputLeftElement={<SearchIcon style={styles.searchIcon} />}
+                            InputRightElement={
+                                props.floatingAction
+                                    ? <View flex={1} alignItems="flex-end">
+                                        <TouchableOpacity style={styles.floatingAction} onPress={props.floatingAction.action}>
+                                            {props.floatingAction.icon}
+                                        </TouchableOpacity>
+                                    </View>
+                                    : undefined
+                            }
                             _focus={{
                                 borderColor: 'transparent',
                                 backgroundColor: 'transparent',
                             }}
                         />
                     </View>
-                    {
-                        props.floatingAction
-                        && <TouchableOpacity style={styles.floatingAction} onPress={props.floatingAction.action}>
-                            {props.floatingAction.icon}
-                        </TouchableOpacity>
-                    }
                 </HStack>
             }
         </>

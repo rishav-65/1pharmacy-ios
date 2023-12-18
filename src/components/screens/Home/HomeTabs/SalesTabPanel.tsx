@@ -193,8 +193,7 @@ const SalesTabPanel = () => {
                         filtersEnabled
                         filters={quickFilters}
                         floatingAction={{
-                            label: 'Create Bill',
-                            icon: <AddIcon color="#FFFFFF" />,
+                            icon: <AddIcon color="#2E6ACF" />,
                             action: ()=>navigation.push('CreateBill')
                         }}
                         selectedFilter={selectedFilter}
