@@ -7,6 +7,7 @@ const APIURLCollection: { [key: string]: string | number } = {
     COMPARISON_DASHBOARD: 'comparison_dashboard',
     SALES_DASHBOARD: 'sales_dashboard',
     PURCHASE_DASHBOARD: 'purchase_listing',
+    ALL_SKU: 'all_sku',
     SALE_DASHBOARD: 'bill_history',
     ORDER_DASHBOARD: 'order_listing',
     PURCHASE_ENTRY: 'purchase_entry',
@@ -19,7 +20,8 @@ const APIURLCollection: { [key: string]: string | number } = {
     SKU_STOCK: 'sku_stock',
     STORE_CUSTOMERS: 'store_customers',
     STORE_DOCTOR_LISTING: 'store_doctor_listing',
-    SUBMIT_BILL: 'submit_bill'
+    SUBMIT_BILL: 'submit_bill',
+    SUPPLIER_LISTING: 'supplier_listing'
 };
 
 export const getURL = (options: GetURLOptions): string => {

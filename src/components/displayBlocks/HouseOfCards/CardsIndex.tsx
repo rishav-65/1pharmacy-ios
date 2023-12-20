@@ -8,6 +8,7 @@ import ValueTitleBox from "./ValueTitleBox";
 import ImageDetailsCard from "./ImageDetailsCard";
 import DescActionsCard from "./DescActionsCard";
 import KeyValDescCard from "./KeyValueDescCard";
+import IDActionsCard from "./IDActionsCard";
 
 const CardsIndex: {[key: string]: React.FC<any>} = {
     card_1: GreetingSummaryCard,
@@ -18,7 +19,8 @@ const CardsIndex: {[key: string]: React.FC<any>} = {
     card_6: ValueTitleBox,
     card_7: ImageDetailsCard,
     card_8: DescActionsCard,
-    card_9: KeyValDescCard
+    card_9: KeyValDescCard,
+    card_10: IDActionsCard
 };
 
 const getCardByIndex = (cardId: string): React.FC => {

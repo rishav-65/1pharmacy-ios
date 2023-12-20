@@ -5,7 +5,7 @@ import { BottomActionSheet, LoadingScreen, P1AlertDialog } from "@commonComponen
 import { APIContext, FormStateContext, ToastContext } from "@contextProviders";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import moment from "moment";
-import { ArrowBackIcon, Box, Button, ChevronDownIcon, FlatList, HStack, IconButton, Input, KeyboardAvoidingView, ScrollView, SearchIcon, Spinner, StatusBar, Switch, Text, VStack, View, isEmptyObj } from "native-base";
+import { ArrowBackIcon, Box, Button, ChevronDownIcon, FlatList, HStack, IconButton, Input, KeyboardAvoidingView, ScrollView, SearchIcon, Spinner, StatusBar, Switch, Text, VStack, View, isEmptyObj, useKeyboardBottomInset } from "native-base";
 import { useContext, useEffect, useState } from "react";
 import { Dimensions, Keyboard, StyleSheet, TouchableOpacity } from "react-native";
 import { calculateTotal, unitStockCount } from "./utils";
@@ -611,6 +611,8 @@ const ItemsSelect = (props: any) => {
 
     const toggleClearDialogOpen = () => setDialogOpen(!clearDialogOpen);
 
+    const keyboardBottomInset = useKeyboardBottomInset();
+
     return (
         <>
             <StatusBar backgroundColor="#FFFFFF" barStyle="dark-content" />
@@ -635,7 +637,7 @@ const ItemsSelect = (props: any) => {
                 }}>
                     <ScrollView keyboardShouldPersistTaps="handled" position="absolute" zIndex={-1} height="100%">
                         <View style={{
-                            height: (searchUnderFocus ? 80 : 200),
+                            height: ((keyboardBottomInset > 0) ? 80 : 200),
                             width: Dimensions.get('window').width,
                             alignItems: 'center',
                             justifyContent: 'center'
@@ -737,8 +739,8 @@ const ItemsSelect = (props: any) => {
                                         borderColor: 'transparent',
                                         backgroundColor: 'transparent',
                                     }}
-                                    onFocus={() => setSearchUnderFocus(true)}
-                                    onBlur={() => setSearchUnderFocus(false)}
+                                    // onFocus={() => setSearchUnderFocus(true)}
+                                    // onBlur={() => setSearchUnderFocus(false)}
                                 />
                             </View>
                             <HStack style={styles.submissionFooter}>

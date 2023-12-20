@@ -79,6 +79,7 @@ export const getActiveUserSessionIndex = async () => {
 export const logOut = async () => {
     try {
         await AsyncStorage.removeItem('userSessions');
+        await setActiveUserSessionIndex(0);
     } catch (err) {
         console.log(err);
     }

@@ -9,11 +9,12 @@ import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { NativeStackScreenProps, createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useContext } from 'react';
 import { APIContextProvider, AuthContext, AuthContextProvider, FormStateProvider, ToastProvider } from '@contextProviders';
-import { BillDetails, CreateBill, CreatePurchase, DynamicScreen, Home, ItemsSelect, LoginScreen, TabScreen, VerifyOTP } from '@screens';
-import { NativeBaseProvider, extendTheme } from 'native-base';
+import { BillDetails, CreateBill, CreatePurchase, CustomersListing, DynamicScreen, Home, InventoryListing, ItemsSelect, LoginScreen, OrdersListing, PurchasesListing, SalesListing, SuppliersListing, TabScreen, VerifyOTP } from '@screens';
+import { NativeBaseProvider, VStack, extendTheme } from 'native-base';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faAdd, faAngleDoubleDown, faAngleDoubleUp, faBars, faCartShopping, faCheck, faChevronRight, faCircleXmark, faFileInvoiceDollar, faFilter, faIndianRupeeSign, faPen, faPercent, faPhone, faPills, faQrcode, faShop, faSubtract, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faAdd, faAngleDoubleDown, faAngleDoubleUp, faBars, faCartShopping, faCheck, faChevronRight, faCircleXmark, faFileInvoiceDollar, faFilter, faIndianRupeeSign, faPen, faPercent, faPhone, faPills, faQrcode, faRightFromBracket, faShop, faSubtract, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
+import SideDrawer from './src/components/SideDrawer';
 
 library.add(
   faPills,
@@ -35,7 +36,8 @@ library.add(
   faChevronRight,
   faPercent,
   faIndianRupeeSign,
-  faCheck
+  faCheck,
+  faRightFromBracket
 );
 
 const _1PTheme = {
@@ -58,6 +60,12 @@ const _1PNativeBaseTheme = extendTheme({
 export type RootStackParamList = {
   DynamicScreen: undefined;
   Home: undefined;
+  SalesListing: undefined;
+  PurchasesListing: undefined;
+  OrdersListing: undefined;
+  InventoryListing: undefined;
+  CustomersListing: undefined;
+  SuppliersListing: undefined;
   VerifyOTP: { phone: number | string };
   TabScreen: { url: string, detailsDisplayProfile: string, screenTitle: string };
   CreateBill: undefined,
@@ -71,6 +79,12 @@ type RouteDefinition = {
   component:
   | React.FC<NativeStackScreenProps<RootStackParamList, 'DynamicScreen'>>
   | React.FC<NativeStackScreenProps<RootStackParamList, 'Home'>>
+  | React.FC<NativeStackScreenProps<RootStackParamList, 'SalesListing'>>
+  | React.FC<NativeStackScreenProps<RootStackParamList, 'PurchasesListing'>>
+  | React.FC<NativeStackScreenProps<RootStackParamList, 'OrdersListing'>>
+  | React.FC<NativeStackScreenProps<RootStackParamList, 'InventoryListing'>>
+  | React.FC<NativeStackScreenProps<RootStackParamList, 'CustomersListing'>>
+  | React.FC<NativeStackScreenProps<RootStackParamList, 'SuppliersListing'>>
   | React.FC<NativeStackScreenProps<RootStackParamList, 'VerifyOTP'>>
   | React.FC<NativeStackScreenProps<RootStackParamList, 'TabScreen'>>
   | React.FC<NativeStackScreenProps<RootStackParamList, 'CreateBill'>>
@@ -106,6 +120,30 @@ const AppNavigator = () => {
       component: Home
     },
     {
+      name: 'SalesListing',
+      component: SalesListing
+    },
+    {
+      name: 'PurchasesListing',
+      component: PurchasesListing
+    },
+    {
+      name: 'OrdersListing',
+      component: OrdersListing
+    },
+    {
+      name: 'InventoryListing',
+      component: InventoryListing
+    },
+    {
+      name: 'CustomersListing',
+      component: CustomersListing
+    },
+    {
+      name: 'SuppliersListing',
+      component: SuppliersListing
+    },
+    {
       name: 'TabScreen',
       component: TabScreen
     },
@@ -130,17 +168,15 @@ const AppNavigator = () => {
   const activeRoutes: RouteDefinition[] = localAuthFetched ? (authStatus.loggedIn ? privateRoutes : publicRoutes) : []
 
   return (
-    <NavigationContainer theme={_1PTheme}>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-        initialRouteName='Home'>
-        {
-          activeRoutes.map(route => (<Stack.Screen key={route.name} name={route.name as keyof RootStackParamList} component={route.component as React.FC<NativeStackScreenProps<RootStackParamList, typeof route.name>>} />))
-        }
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+      initialRouteName='Home'>
+      {
+        activeRoutes.map(route => (<Stack.Screen key={route.name} name={route.name as keyof RootStackParamList} component={route.component as React.FC<NativeStackScreenProps<RootStackParamList, typeof route.name>>} />))
+      }
+    </Stack.Navigator>
   );
 };
 
@@ -151,7 +187,9 @@ function App(): JSX.Element {
         <AuthContextProvider>
           <APIContextProvider>
             <FormStateProvider>
-              <AppNavigator />
+              <NavigationContainer theme={_1PTheme}>
+                <SideDrawer component={AppNavigator} />
+              </NavigationContainer>
             </FormStateProvider>
           </APIContextProvider>
         </AuthContextProvider>

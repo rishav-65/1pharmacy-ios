@@ -1,6 +1,7 @@
 import { APIURLCollection, getURL } from "@APIRepository";
 import { HorizontalScrollableSection } from "@Containers";
 import { GreetingSummaryCard, HorizontalDescriptionListCard, SectionDescriptionListCard, VerticalDescriptionListCard } from "@HouseOfCards";
+import P1Styles from "@P1StyleSheet";
 import { ToastProfiles } from "@ToastProfiles";
 import { APIContext, AuthContext, ToastContext } from "@contextProviders";
 import moment from "moment";
@@ -14,14 +15,18 @@ const styles = StyleSheet.create({
         height: 100
     },
     filterChip: {
-        margin: 5,
+        padding: 5,
+        paddingVertical: 7.5
     },
     unSelectedChip: {
-        borderColor: '#2E6ACF'
+        backgroundColor: '#FFFFFF',
+        borderColor: '#FFFFFF',
+        ...P1Styles.shadow
     },
     selectedChip: {
         backgroundColor: '#2E6ACF',
-        borderColor: '#2E6ACF'
+        borderColor: '#FFFFFF',
+        ...P1Styles.shadow
     }
 })
 
@@ -186,14 +191,26 @@ const dashboardContents = [
                 {
                     title: 'Total Sales',
                     value: `₹ ${summary.sales.toLocaleString('en-US', { maximumFractionDigits: 2 })}`,
+                    action: 'push',
+                    actionParams: [
+                        'SalesListing'
+                    ]
                 },
                 {
                     title: 'Total Purchase',
                     value: `₹ ${summary.purchase.toLocaleString('en-US', { maximumFractionDigits: 2 })}`,
+                    action: 'push',
+                    actionParams: [
+                        'PurchasesListing'
+                    ]
                 },
                 {
                     title: 'Total Orders',
                     value: `₹ ${summary.sales_count}`,
+                    action: 'push',
+                    actionParams: [
+                        'OrdersListing'
+                    ]
                 },
             ])
         }
@@ -206,6 +223,10 @@ const dashboardContents = [
 
             return ({
                 title: 'Inventory Status',
+                action: 'push',
+                    actionParams: [
+                        'InventoryListing'
+                    ],
                 items: [
                     {
                         title: 'Inventory value by MRP',
@@ -226,6 +247,10 @@ const dashboardContents = [
         propParser: (response: any) => {
             return ({
                 title: 'Sales Summary',
+                action: 'push',
+                    actionParams: [
+                        'SalesListing'
+                    ],
                 items: [
                     {
                         title: 'Sales Count',
@@ -263,6 +288,10 @@ const dashboardContents = [
 
             return ({
                 title: 'Purchase Summary',
+                action: 'push',
+                    actionParams: [
+                        'PurchasesListing'
+                    ],
                 items: [
                     {
                         title: 'Purchase Count',
@@ -300,6 +329,10 @@ const dashboardContents = [
 
             return ({
                 title: 'Need to Collect',
+                action: 'push',
+                    actionParams: [
+                        'CustomersListing'
+                    ],
                 items: response.data.pending_customers.map((customer: any) => ({ title: customer.name, value: `₹ ${customer.netTotalAmount.toLocaleString('en-US', { maximumFractionDigits: 2 })}` }))
             })
         }
@@ -312,6 +345,10 @@ const dashboardContents = [
 
             return ({
                 title: 'Need to Pay',
+                action: 'push',
+                    actionParams: [
+                        'SuppliersListing'
+                    ],
                 items: response.data.pending_suppliers.sort((a: any, b: any) => (b.netTotalAmount - a.netTotalAmount)).slice(0, 5).map((supplier: any) => ({ title: supplier.supplierName || supplier.name, value: `₹ ${supplier.netTotalAmount.toLocaleString('en-US', { maximumFractionDigits: 2 })}` }))
             })
         }
@@ -324,6 +361,10 @@ const dashboardContents = [
 
             return ({
                 title: 'Top Customers',
+                action: 'push',
+                    actionParams: [
+                        'CustomersListing'
+                    ],
                 items: response.data.top_customers.map((customer: any) => ({ title: customer.name, value: `₹ ${customer.netTotalAmount.toLocaleString('en-US', { maximumFractionDigits: 2 })}` }))
             })
         }
@@ -336,6 +377,10 @@ const dashboardContents = [
 
             return ({
                 title: 'Top Suppliers',
+                action: 'push',
+                    actionParams: [
+                        'SuppliersListing'
+                    ],
                 items: response.data.supplier_summary.sort((a: any, b: any) => (b.netTotalAmount - a.netTotalAmount)).slice(0, 5).map((supplier: any) => ({ title: supplier.supplierName || supplier.name, value: `₹ ${supplier.netTotalAmount.toLocaleString('en-US', { maximumFractionDigits: 2 })}` }))
             })
         }
@@ -371,6 +416,10 @@ const dashboardContents = [
 
             return ({
                 title: 'Expiring Items',
+                action: 'push',
+                    actionParams: [
+                        'ExpiryReport'
+                    ],
                 items: response.data.near_expiry_dashboard.map((item: any) => ({ title: item.name, value: item.expiry }))
             })
         }

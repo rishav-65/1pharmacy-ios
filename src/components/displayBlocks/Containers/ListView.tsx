@@ -16,7 +16,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
         borderRadius: 30,
         marginHorizontal: 20,
-        marginTop: 10,
         ...P1Styles.shadow
     },
     summarySection: {
@@ -31,18 +30,17 @@ const styles = StyleSheet.create({
     },
     listTitle: {
         marginVertical: 2,
-        fontSize: 20,
+        fontSize: 16,
         fontWeight: '700',
     },
     sectionTitleContainer: {
         backgroundColor: '#FFFFFF'
     },
     sectionTitle: {
-        fontSize: 18,
+        fontSize: 16,
         color: '#A0A0A0',
         fontWeight: '400',
-        marginHorizontal: 20,
-        marginVertical: 2.5
+        marginHorizontal: 25,
     },
     searchIcon: {
         marginLeft: 10
@@ -63,14 +61,18 @@ const styles = StyleSheet.create({
         marginVertical: 10
     },
     filterChip: {
-        margin: 5
+        padding: 5,
+        paddingVertical: 7.5
     },
     unSelectedChip: {
-        borderColor: '#2E6ACF'
+        backgroundColor: '#FFFFFF',
+        borderColor: '#FFFFFF',
+        ...P1Styles.shadow
     },
     selectedChip: {
         backgroundColor: '#2E6ACF',
-        borderColor: '#2E6ACF'
+        borderColor: '#FFFFFF',
+        ...P1Styles.shadow
     },
     listContentContainer: {
         paddingBottom: 900
@@ -165,7 +167,7 @@ const ListView = (props: any) => {
         <>
             {
                 searchEnabled
-                && <View style={styles.searchBox}>
+                && <View style={{ ...styles.searchBox, ...(props.bottomTabsMounted ? { marginTop: 10 } : {}) }}>
                     <Input
                         borderColor='transparent'
                         size="xl"
@@ -195,7 +197,7 @@ const ListView = (props: any) => {
                         </HorizontalScrollableSection>
                     </View>
                 }
-                <View style={styles.titleBlock}>
+                <View style={{ ...styles.titleBlock, ...(summaryBlocks ? {} : { marginTop: 10 }) }}>
                     {props.title && <Text style={styles.listTitle}>{props.title}</Text>}
                     {
                         props.filtersEnabled
@@ -231,8 +233,9 @@ const ListView = (props: any) => {
                         : (
                             props.sections
                                 ? <SectionList
+                                    bounces={!!props.onRefresh}
                                     refreshControl={
-                                        <RefreshControl refreshing={refreshing} onRefresh={()=>props.onRefresh(setRefreshing)} />
+                                        <RefreshControl refreshing={refreshing} onRefresh={() => (props.onRefresh || (() => { }))(setRefreshing)} />
                                     }
                                     contentContainerStyle={styles.listContentContainer}
                                     sections={props.sections.map((section: any) => (
@@ -255,7 +258,7 @@ const ListView = (props: any) => {
                                 />
                                 : <FlatList
                                     refreshControl={
-                                        <RefreshControl refreshing={refreshing} onRefresh={()=>props.onRefresh(setRefreshing)} />
+                                        <RefreshControl refreshing={refreshing} onRefresh={() => props.onRefresh(setRefreshing)} />
                                     }
                                     contentContainerStyle={styles.listContentContainer}
                                     data={displayList}

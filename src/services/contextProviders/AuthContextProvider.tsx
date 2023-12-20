@@ -1,4 +1,4 @@
-import { getActiveUserSession, setActiveUserSessionIndex, setUserSessions } from '@auth';
+import { getActiveUserSession, logOut, setActiveUserSessionIndex, setUserSessions } from '@auth';
 import { LoadingScreen } from '@commonComponents';
 import React from 'react';
 
@@ -10,7 +10,7 @@ type AuthStatus = {
   sessions?: Array<any>
 };
 
-const initialState: { authStatus: AuthStatus; setLoggedInUser: Function, setActiveSession: Function, logOut: Function, localAuthFetched: boolean } = {
+const initialState: { authStatus: AuthStatus; setLoggedInUser: Function, setActiveSession: Function, userLogOut: Function, localAuthFetched: boolean } = {
   authStatus: {
     loggedIn: false,
     loggedInUser: null,
@@ -20,7 +20,7 @@ const initialState: { authStatus: AuthStatus; setLoggedInUser: Function, setActi
   },
   setLoggedInUser: (sessions: Array<any>) => { },
   setActiveSession: (index: number) => { },
-  logOut: () => { },
+  userLogOut: () => { },
   localAuthFetched: false
 };
 
@@ -66,8 +66,8 @@ const AuthContextProvider = (props: { children: React.ReactNode }) => {
     })
   }
 
-  const logOut = () => {
-    setAuthStatus(initialState.authStatus)
+  const userLogOut = async () => {
+    return logOut().then(()=>setAuthStatus(initialState.authStatus));
   }
 
   React.useEffect(() => {
@@ -87,7 +87,7 @@ const AuthContextProvider = (props: { children: React.ReactNode }) => {
         authStatus,
         setLoggedInUser,
         setActiveSession,
-        logOut,
+        userLogOut,
         localAuthFetched
       }}>
       {localAuthFetched ? props.children : <LoadingScreen />}

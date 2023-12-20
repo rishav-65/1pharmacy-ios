@@ -11,6 +11,7 @@ module.exports = {
           "@DynamicViewHandler": "./src/components/displayBlocks/DynamicViewHandler",
           "@HouseOfCards": "./src/components/displayBlocks/HouseOfCards",
           "@screens": "./src/components/screens",
+          "@EntityHandlers": "./src/components/EntityHandlers",
           "@commonComponents": "./src/components/commonComponents",
           "@auth": "./src/services/auth",
           "@contextProviders": "./src/services/contextProviders",
@@ -19,10 +20,12 @@ module.exports = {
           "@APIConfig": "./src/utils/APIConfig",
           "@APIHandler": "./src/services/APIHandler",
           "@APIRepository": "./src/utils/APIRepository",
-          "@P1StyleSheet": "./src/utils/P1StyleSheet"
+          "@P1StyleSheet": "./src/utils/P1StyleSheet",
+          "@Emitter": "./src/utils/Emitter"
         },
       },
     ],
+    'react-native-reanimated/plugin',
   ],
 
 };

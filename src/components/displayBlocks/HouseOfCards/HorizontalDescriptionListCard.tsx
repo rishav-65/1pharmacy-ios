@@ -1,6 +1,9 @@
 import P1Styles from "@P1StyleSheet";
-import { ChevronRightIcon, FavouriteIcon, ScrollView, Spinner, Text, View } from "native-base";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList } from "App";
+import { ChevronRightIcon, FavouriteIcon, HStack, ScrollView, Spinner, Text, View } from "native-base";
+import { Linking, StyleSheet, TouchableOpacity } from "react-native";
 
 const styles = StyleSheet.create({
     cardBase: {
@@ -9,17 +12,31 @@ const styles = StyleSheet.create({
         marginVertical: 10,
         backgroundColor: '#FFFFFF',
         paddingBottom: 5,
+        minHeight: 80,
         ...P1Styles.shadow,
     },
     cardHeader: {
-        backgroundColor: '#2E6ACF',
+        position: 'relative',
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
+        overflow: 'hidden',
+        height: 40,
+        width: '100%',
+        backgroundColor: '#FFFFFF',
         flexDirection: 'row',
         alignItems: 'center',
-        padding: 10,
         justifyContent: 'space-between',
-        ...P1Styles.shadow,
+        padding: 1,
+        borderBottomColor: '#2E6ACF',
+        borderBottomWidth: 1,
+    },
+    skewBackground: {
+        position: 'absolute',
+        left: -100,
+        backgroundColor: '#2E6ACF',
+        height: 450,
+        width: 300,
+        transform: [{ skewY: '60deg' }]
     },
     cardHeadingContainer: {
         flexDirection: 'row',
@@ -27,64 +44,76 @@ const styles = StyleSheet.create({
     },
     cardHeading: {
         color: '#FFFFFF',
-        fontSize: 22,
-        lineHeight:24,
+        fontSize: 16,
+        lineHeight: 24,
         fontWeight: '500',
     },
     cardHeaderIcon: {
-        color: '#FFFFFF',
+        color: '#2E6ACF',
         marginRight: 10
     },
     descItemBlock: {
         marginRight: 10,
-        marginVertical: 10
+        marginVertical: 5
     },
     descTitle: {
-        fontSize: 16,
+        fontSize: 14,
         lineHeight: 18,
         padding: 5
     },
     descValue: {
-        fontSize: 20,
+        fontSize: 16,
         fontWeight: '700',
         lineHeight: 22,
-        padding: 5
+        paddingHorizontal: 5
     }
 })
 
 const HorizontalDescriptionListCard = (props: any) => {
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+    const itemClickActions: { [key: string]: any } = {
+        push: navigation.push,
+        link: (url: string) => Linking.openURL.call(Linking, url)
+    }
 
     const loaded = props.loaded === false ? false : true;
 
     return (
         <View style={styles.cardBase}>
-            <TouchableOpacity style={styles.cardHeader}>
-                <View style={styles.cardHeadingContainer}>
-                    {props.data.icon && <FavouriteIcon size={5} style={styles.cardHeaderIcon} />}
-                    <Text style={styles.cardHeading}>
-                        {props.data.title}
-                    </Text>
-                </View>
-                <ChevronRightIcon style={{ ...styles.cardHeaderIcon, justifySelf: 'flex-end' }} />
+            <TouchableOpacity style={styles.cardHeader} onPress={() => (itemClickActions[props.data.action] || (() => { }))(...(props.data.actionParams || []))}>
+                <View style={styles.skewBackground} />
+                <HStack alignItems="center" justifyContent="space-between" width="100%" paddingX={2}>
+                    <View style={styles.cardHeadingContainer}>
+                        {props.data.icon && <FavouriteIcon size={5} style={styles.cardHeaderIcon} />}
+                        <Text style={styles.cardHeading}>
+                            {props.data.title}
+                        </Text>
+                    </View>
+                    {
+                        loaded
+                            ? <ChevronRightIcon style={{ ...styles.cardHeaderIcon, justifySelf: 'flex-end' }} />
+                            : <Spinner color='#FFFFFF' marginY={5} alignSelf='center' />
+                    }
+                </HStack>
             </TouchableOpacity>
-            <View paddingX={5}>
+            <View paddingX={2}>
                 {
                     loaded
-                        ? <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                            {
-                                props.data.items.map((item: any) => (
-                                    <View style={styles.descItemBlock} key={item.title + item.value}>
-                                        <Text style={styles.descTitle}>
-                                            {item.title}
-                                        </Text>
-                                        <Text style={styles.descValue}>
-                                            {item.value}
-                                        </Text>
-                                    </View>
-                                ))
-                            }
-                        </ScrollView>
-                        : <Spinner color='#FFFFFF' marginY={5} alignSelf='center' />
+                    && <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                        {
+                            props.data.items.map((item: any) => (
+                                <View style={styles.descItemBlock} key={item.title + item.value}>
+                                    <Text style={styles.descTitle}>
+                                        {item.title}
+                                    </Text>
+                                    <Text style={styles.descValue}>
+                                        {item.value}
+                                    </Text>
+                                </View>
+                            ))
+                        }
+                    </ScrollView>
                 }
             </View>
         </View>

@@ -1,5 +1,5 @@
 import P1Styles from "@P1StyleSheet";
-import { ScrollView, Text, View } from "native-base";
+import { HStack, ScrollView, Text, View } from "native-base";
 import React from "react";
 import { Animated, Dimensions, StyleSheet, TouchableHighlight, TouchableOpacity } from "react-native";
 
@@ -9,20 +9,38 @@ const styles = StyleSheet.create({
     cardBase: {
         backgroundColor: '#FFFFFF',
         borderRadius: 20,
-        paddingTop: 10,
+        // paddingTop: 10,
         marginHorizontal: 20,
         marginVertical: 10,
         ...P1Styles.shadow
     },
     titleBlock: {
+        position: 'relative',
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        overflow: 'hidden',
+        height: 40,
+        width: '100%',
+        backgroundColor: '#FFFFFF',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginHorizontal: 15
+        padding: 1,
+        borderBottomColor: '#2E6ACF',
+        borderBottomWidth: 1,
+    },
+    skewBackground: {
+        position: 'absolute',
+        left: -100,
+        backgroundColor: '#2E6ACF',
+        height: 450,
+        width: 300,
+        transform: [{ skewY: '60deg' }]
     },
     title: {
         fontSize: 15,
         fontWeight: '700',
+        color: '#FFFFFF',
         maxWidth: 70 * (windowWidth - 80) / 100
     },
     subtitle: {
@@ -153,12 +171,15 @@ const DescItemCard = (props: any) => {
     return (
         <TouchableOpacity onPress={props.onPress} style={styles.cardBase}>
             <View style={styles.titleBlock}>
-                <Text style={styles.title}>
-                    {item.title}
-                </Text>
-                <Text style={styles.subtitle}>
-                    {item.subtitle}
-                </Text>
+                <View style={styles.skewBackground} />
+                <HStack alignItems="center" justifyContent="space-between" width="100%" paddingX={2}>
+                    <Text style={styles.title}>
+                        {item.title}
+                    </Text>
+                    <Text style={styles.subtitle}>
+                        {item.subtitle}
+                    </Text>
+                </HStack>
             </View>
             <View style={styles.descBlock}>
                 <View style={!!item.badge ? styles.detailsBlock : styles.detailsBlockWithoutBadge}>

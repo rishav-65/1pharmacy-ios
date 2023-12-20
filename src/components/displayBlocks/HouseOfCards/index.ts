@@ -8,5 +8,6 @@ import ValueTitleBox from "./ValueTitleBox";
 import DescActionsCard from "./DescActionsCard";
 import ImageDetailsCard from "./ImageDetailsCard";
 import KeyValDescCard from "./KeyValueDescCard";
+import IDActionsCard from "./IDActionsCard";
 
-export { CardsIndex, getCardByIndex, GreetingSummaryCard, HorizontalDescriptionListCard, VerticalDescriptionListCard, SectionDescriptionListCard, DescItemCard, ValueTitleBox, ImageDetailsCard, DescActionsCard, KeyValDescCard }
+export { CardsIndex, getCardByIndex, GreetingSummaryCard, HorizontalDescriptionListCard, VerticalDescriptionListCard, SectionDescriptionListCard, DescItemCard, ValueTitleBox, ImageDetailsCard, DescActionsCard, KeyValDescCard, IDActionsCard }
