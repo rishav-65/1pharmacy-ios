@@ -143,7 +143,8 @@ const SideDrawer = ({ component }: { component: any }) => {
                     borderTopRightRadius: 42,
                     borderBottomRightRadius: 42,
                     overflow: 'hidden',
-                    marginTop: 25
+                    marginTop: 25,
+                    marginBottom: 25
                 },
             }}
             initialRouteName="Home"

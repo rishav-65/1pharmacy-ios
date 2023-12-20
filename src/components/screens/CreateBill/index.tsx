@@ -205,7 +205,7 @@ const ItemDetailForm = ({ index, customers, customersLoaded, doctors, doctorsLoa
 
     useEffect(() => {
         if (!mounted) {
-            if (isEmpty(saleFormState[index])) {
+            if (!saleFormState[index] || isEmpty(saleFormState[index])) {
                 initializeSaleFormState(index)
             }
             setMounted(true)

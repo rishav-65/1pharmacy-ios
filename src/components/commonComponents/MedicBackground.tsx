@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
     },
     backgroundIcon: {
         margin: 2,
-        fontSize: 11,
         color: '#EAEAEA'
     }
 })
@@ -40,7 +39,7 @@ const MedicBackground = ({ width, height }: { width: number, height: number }) =
         <View style={{ ...styles.backgroundContainer, width, height }}>
             {
                 Array.from({ length: (iconsCount - 0) / 1 + 1 }, (value, index) => 0 + index * 1).map((index) => (
-                    <FontAwesomeIcon style={{ ...styles.backgroundIcon, transform: [{ rotate: `${Math.floor(Math.random() * 360)}deg` }] }} icon={backgroundIcons[Math.floor(Math.random() * 11)]} />
+                    <FontAwesomeIcon size={20} style={{ ...styles.backgroundIcon, transform: [{ rotate: `${Math.floor(Math.random() * 360)}deg` }] }} icon={backgroundIcons[Math.floor(Math.random() * 11)]} />
                 ))
             }
         </View>

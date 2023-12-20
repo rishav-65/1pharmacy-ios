@@ -311,6 +311,8 @@ const BillDetails = (props: any) => {
 
                     setSubmitting(false);
 
+                    initializeSaleFormState(saleIndex);
+
                     props.navigation.pop(2);
                     props.navigation.push(
                         'TabScreen',
