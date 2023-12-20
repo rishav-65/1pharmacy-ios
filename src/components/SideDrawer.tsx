@@ -10,6 +10,7 @@ import { RootStackParamList } from 'App';
 import Emitter from '@Emitter';
 import { useContext, useState } from "react";
 import P1AlertDialog from "./commonComponents/P1AlertDialog";
+import MedicBackground from "./commonComponents/MedicBackground";
 
 const { width, height } = Dimensions.get('window');
 
@@ -70,6 +71,20 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         ...P1Styles.shadow
     },
+    backgroundContainer: {
+        position: 'absolute',
+        height: height,
+        width: 0.8 * width,
+        flexDirection: 'row',
+        alignItems: 'center',
+        flexWrap: 'wrap',
+        overflow: 'hidden'
+    },
+    backgroundIcon: {
+        margin: 2,
+        fontSize: 11,
+        color: '#EAEAEA'
+    }
 })
 
 const navList: {
@@ -114,6 +129,8 @@ const SideDrawer = ({ component }: { component: any }) => {
         navigation.dispatch(DrawerActions.toggleDrawer())
     }
 
+    const drawerWidth = 0.8 * width;
+
     return (
         <Drawer.Navigator
             screenOptions={{
@@ -125,15 +142,15 @@ const SideDrawer = ({ component }: { component: any }) => {
                     width: '75%',
                     borderTopRightRadius: 42,
                     borderBottomRightRadius: 42,
-                    padding: 20,
-                    paddingLeft: 0
-                    // backgroundColor: '#00000000'
+                    overflow: 'hidden',
+                    marginTop: 25
                 },
             }}
             initialRouteName="Home"
             drawerContent={(props) => (
                 !!authStatus.authToken
-                    ? <>
+                    ? <View style={{ padding: 20, paddingLeft: 0, }}>
+                        <MedicBackground height={height} width={drawerWidth} />
                         <VStack justifyContent="space-between" height="100%">
                             <VStack>
                                 <HStack style={styles.header}>
@@ -188,7 +205,7 @@ const SideDrawer = ({ component }: { component: any }) => {
                                 }
                             ]}
                         />
-                    </>
+                    </View>
                     : <></>
             )}>
             <Drawer.Screen name="Root" component={component} />

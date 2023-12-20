@@ -12,7 +12,7 @@ import { APIContextProvider, AuthContext, AuthContextProvider, FormStateProvider
 import { BillDetails, CreateBill, CreatePurchase, CustomersListing, DynamicScreen, Home, InventoryListing, ItemsSelect, LoginScreen, OrdersListing, PurchasesListing, SalesListing, SuppliersListing, TabScreen, VerifyOTP } from '@screens';
 import { NativeBaseProvider, VStack, extendTheme } from 'native-base';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faAdd, faAngleDoubleDown, faAngleDoubleUp, faBars, faCartShopping, faCheck, faChevronRight, faCircleXmark, faFileInvoiceDollar, faFilter, faIndianRupeeSign, faPen, faPercent, faPhone, faPills, faQrcode, faRightFromBracket, faShop, faSubtract, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faAdd, faAngleDoubleDown, faAngleDoubleUp, faBars, faCapsules, faCartShopping, faCheck, faChevronRight, faCircleXmark, faFileInvoiceDollar, faFilePrescription, faFilter, faHospital, faHouseChimney, faHouseMedical, faIndianRupeeSign, faPen, faPercent, faPhone, faPills, faPrescription, faPrescriptionBottle, faPrescriptionBottleMedical, faQrcode, faRightFromBracket, faShop, faStethoscope, faSubtract, faSyringe, faTablet, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import SideDrawer from './src/components/SideDrawer';
 
@@ -37,7 +37,18 @@ library.add(
   faPercent,
   faIndianRupeeSign,
   faCheck,
-  faRightFromBracket
+  faRightFromBracket,
+  faStethoscope,
+  faHospital,
+  faTablet,
+  faSyringe,
+  faPrescriptionBottleMedical,
+  faPrescriptionBottle,
+  faPrescription,
+  faHouseMedical,
+  faHouseChimney,
+  faFilePrescription,
+  faCapsules
 );
 
 const _1PTheme = {
