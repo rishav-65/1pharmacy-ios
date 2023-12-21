@@ -202,7 +202,10 @@ const SideDrawer = ({ component }: { component: any }) => {
                                     label: 'LogOut',
                                     variant: 'solid',
                                     style: { ...styles.logOutConfirmButton, backgroundColor: '#D00000' },
-                                    action: () => userLogOut().then(() => navigation.dispatch(DrawerActions.toggleDrawer()))
+                                    action: () => userLogOut().then(() => {
+                                        navigation.dispatch(DrawerActions.toggleDrawer());
+                                        toggleLogOutDialogOpen();
+                                    })
                                 }
                             ]}
                         />
