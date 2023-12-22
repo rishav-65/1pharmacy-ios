@@ -354,6 +354,7 @@ const ItemDetailsForm = ({ itemAbstract, index, onSubmit, loadItem, onClose }: {
                                             _input={{
                                                 style: { fontSize: 14, ...(editingUnitRatio ? {} : { paddingVertical: 0, paddingHorizontal: 0 }) }
                                             }}
+                                            isDisabled={!!item.unitRatio}
                                             value={(selectedItem.unitRatio === undefined) ? undefined : `${selectedItem.unitRatio || ''}`} onChangeText={(text) => setSelectedItem({ ...selectedItem, unitRatio: +(text) })}
                                             onFocus={() => setEditingUnitRatio(true)}
                                             onBlur={() => setEditingUnitRatio(false)}
@@ -363,7 +364,7 @@ const ItemDetailsForm = ({ itemAbstract, index, onSubmit, loadItem, onClose }: {
                                             }}
                                         />
                                     </View>
-                                    <IconButton icon={<FontAwesomeIcon icon={'pen'} size={12} color="#2E6ACF" />} onPress={() => editingUnitRatio ? setEditingUnitRatio(false) : setEditingUnitRatio(true)} />
+                                    {!item.unitRatio && <IconButton icon={<FontAwesomeIcon icon={'pen'} size={12} color="#2E6ACF" />} onPress={() => editingUnitRatio ? setEditingUnitRatio(false) : setEditingUnitRatio(true)} />}
                                 </HStack>
                             }
                             <HStack alignItems="center" justifyContent="space-between" my={2}>
@@ -635,7 +636,7 @@ const ItemsSelect = (props: any) => {
                     height: '100%',
                     justifyContent: 'flex-end'
                 }}>
-                    <ScrollView keyboardShouldPersistTaps="handled" position="absolute" zIndex={-1} height="100%">
+                    <ScrollView keyboardShouldPersistTaps="never" position="absolute" zIndex={-1} height="100%">
                         <View style={{
                             height: ((keyboardBottomInset > 0) ? 80 : 200),
                             width: Dimensions.get('window').width,

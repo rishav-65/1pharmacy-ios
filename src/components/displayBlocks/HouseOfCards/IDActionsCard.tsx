@@ -4,7 +4,9 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "App";
 import { HStack, IconButton, Text, ThreeDotsIcon, View } from "native-base";
-import { Linking, StyleSheet } from "react-native";
+import { Dimensions, Linking, StyleSheet } from "react-native";
+
+const windowWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
     cardBase: {
@@ -20,7 +22,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
         overflow: 'hidden',
-        height: 40,
+        minHeight: 40,
         width: '100%',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -46,7 +48,9 @@ const styles = StyleSheet.create({
         marginTop: 5,
         paddingBottom: 5,
         borderBottomWidth: 1,
-        borderBottomColor: '#2E6ACF'
+        borderBottomColor: '#2E6ACF',
+        flexWrap: 'wrap',
+        maxWidth: 50 * (windowWidth - 80) / 100
     },
     title: {
         fontSize: 16,

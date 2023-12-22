@@ -3,7 +3,9 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "App";
 import { ChevronRightIcon, FavouriteIcon, HStack, ScrollView, Spinner, Text, View } from "native-base";
-import { Linking, StyleSheet, TouchableOpacity } from "react-native";
+import { Dimensions, Linking, StyleSheet, TouchableOpacity } from "react-native";
+
+const windowWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
     cardBase: {
@@ -20,7 +22,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
         overflow: 'hidden',
-        height: 40,
+        minHeight: 40,
         width: '100%',
         backgroundColor: '#FFFFFF',
         flexDirection: 'row',
@@ -29,6 +31,10 @@ const styles = StyleSheet.create({
         padding: 1,
         borderBottomColor: '#2E6ACF',
         borderBottomWidth: 1,
+    },
+    headerIconContainer: {
+        height: 25,
+        justifyContent: 'center'
     },
     skewBackground: {
         position: 'absolute',
@@ -47,10 +53,13 @@ const styles = StyleSheet.create({
         fontSize: 16,
         lineHeight: 24,
         fontWeight: '500',
+        flexWrap: 'wrap',
+        maxWidth: 50 * (windowWidth - 80) / 100
     },
     cardHeaderIcon: {
         color: '#2E6ACF',
-        marginRight: 10
+        marginRight: 10,
+        justifyContent: 'center'
     },
     descItemBlock: {
         marginRight: 10,
@@ -83,18 +92,20 @@ const HorizontalDescriptionListCard = (props: any) => {
         <View style={styles.cardBase}>
             <TouchableOpacity style={styles.cardHeader} onPress={() => (itemClickActions[props.data.action] || (() => { }))(...(props.data.actionParams || []))}>
                 <View style={styles.skewBackground} />
-                <HStack alignItems="center" justifyContent="space-between" width="100%" paddingX={2}>
+                <HStack alignItems="center" justifyContent="space-between" width="100%" paddingX={2} paddingY={1}>
                     <View style={styles.cardHeadingContainer}>
                         {props.data.icon && <FavouriteIcon size={5} style={styles.cardHeaderIcon} />}
                         <Text style={styles.cardHeading}>
                             {props.data.title}
                         </Text>
                     </View>
-                    {
-                        loaded
-                            ? <ChevronRightIcon style={{ ...styles.cardHeaderIcon, justifySelf: 'flex-end' }} />
-                            : <Spinner color='#FFFFFF' marginY={5} alignSelf='center' />
-                    }
+                    <View style={styles.headerIconContainer}>
+                        {
+                            loaded
+                                ? <ChevronRightIcon style={{ ...styles.cardHeaderIcon, justifySelf: 'flex-end' }} />
+                                : <Spinner color='#FFFFFF' marginY={5} alignSelf='center' />
+                        }
+                    </View>
                 </HStack>
             </TouchableOpacity>
             <View paddingX={2}>

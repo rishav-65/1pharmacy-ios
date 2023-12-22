@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
         overflow: 'hidden',
-        height: 40,
+        minHeight: 40,
         width: '100%',
         backgroundColor: '#FFFFFF',
         flexDirection: 'row',
@@ -45,8 +45,14 @@ const styles = StyleSheet.create({
     cardHeading: {
         color: '#FFFFFF',
         fontSize: 16,
-        lineHeight:24,
-        fontWeight: '500'
+        lineHeight: 24,
+        fontWeight: '500',
+        flexWrap: 'wrap',
+        maxWidth: 50 * (windowWidth - 80) / 100
+    },
+    headerIconContainer: {
+        height: 25,
+        justifyContent: 'center'
     },
     cardHeaderIcon: {
         color: '#2E6ACF',
@@ -113,19 +119,21 @@ const SectionDescriptionListCard = (props: any) => {
     return (
         <View style={styles.cardBase}>
             <TouchableOpacity style={styles.cardHeader}>
-            <View style={styles.skewBackground} />
-            <HStack alignItems="center" justifyContent="space-between" width="100%" paddingX={2}>
-            <View style={styles.cardHeadingContainer}>
-                    {props.data.icon && <FavouriteIcon size={5} style={styles.cardHeaderIcon} />}
-                    <Text style={styles.cardHeading}>
-                        {props.data.title}
-                    </Text>
-                </View>
-                {
-                    props.loaded
-                    ? <ChevronRightIcon style={{ ...styles.cardHeaderIcon, justifySelf: 'flex-end' }} />
-                    : <Spinner color='#FFFFFF' marginY={5} alignSelf='center' />
-                }
+                <View style={styles.skewBackground} />
+                <HStack alignItems="center" justifyContent="space-between" width="100%" paddingX={2} paddingY={1}>
+                    <View style={styles.cardHeadingContainer}>
+                        {props.data.icon && <FavouriteIcon size={5} style={styles.cardHeaderIcon} />}
+                        <Text style={styles.cardHeading}>
+                            {props.data.title}
+                        </Text>
+                    </View>
+                    <View style={styles.headerIconContainer}>
+                        {
+                            props.loaded
+                                ? <ChevronRightIcon style={{ ...styles.cardHeaderIcon, justifySelf: 'flex-end' }} />
+                                : <Spinner color='#FFFFFF' marginY={5} alignSelf='center' />
+                        }
+                    </View>
                 </HStack>
             </TouchableOpacity>
             {<>

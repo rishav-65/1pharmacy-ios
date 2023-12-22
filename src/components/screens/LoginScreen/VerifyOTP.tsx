@@ -44,10 +44,10 @@ const VerifyOTP = (props: NativeStackScreenProps<RootStackParamList, 'VerifyOTP'
 
                 setLoggedInUser(response.data.sessions)
 
-                showToast(ToastProfiles.success)
+                showToast(ToastProfiles.success);
 
             }).catch(error => {
-                showToast(ToastProfiles.error)
+                showToast({...ToastProfiles.error, title: error.error.userMessage})
             })
         }
         setOTP(OTP)

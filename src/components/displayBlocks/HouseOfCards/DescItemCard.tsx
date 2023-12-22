@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
         overflow: 'hidden',
-        height: 40,
+        minHeight: 40,
         width: '100%',
         backgroundColor: '#FFFFFF',
         flexDirection: 'row',
@@ -41,12 +41,15 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: '700',
         color: '#FFFFFF',
-        maxWidth: 70 * (windowWidth - 80) / 100
+        flexWrap: 'wrap',
+        maxWidth: 50 * (windowWidth - 80) / 100
     },
     subtitle: {
         fontSize: 15,
         fontWeight: '700',
-        maxWidth: 30 * (windowWidth - 80) / 100
+        maxWidth: 30 * (windowWidth - 80) / 100,
+        height: 25,
+        justifyContent: 'center'
     },
     descBlock: {
         flexDirection: 'row',
@@ -72,7 +75,7 @@ const styles = StyleSheet.create({
     },
     collapsibleList: {
         marginTop: 10,
-        borderBottomColor: '#E5E5E5',
+        borderBottomColor: '#2E6ACF',
         borderBottomWidth: 1,
     },
     nestedListItem: {
@@ -172,7 +175,7 @@ const DescItemCard = (props: any) => {
         <TouchableOpacity onPress={props.onPress} style={styles.cardBase}>
             <View style={styles.titleBlock}>
                 <View style={styles.skewBackground} />
-                <HStack alignItems="center" justifyContent="space-between" width="100%" paddingX={2}>
+                <HStack alignItems="center" justifyContent="space-between" width="100%" paddingX={2} paddingY={1}>
                     <Text style={styles.title}>
                         {item.title}
                     </Text>

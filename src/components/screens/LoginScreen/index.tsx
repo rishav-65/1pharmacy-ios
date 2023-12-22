@@ -40,7 +40,7 @@ const LoginScreen = (props: NativeStackScreenProps<RootStackParamList, 'Home'>) 
       props.navigation.push('VerifyOTP', { phone })
     }).catch(error => {
       setLoading(false);
-      showToast(ToastProfiles.error)
+      showToast({...ToastProfiles.error, title: error.error.userMessage});
     })
   }
 

@@ -250,7 +250,8 @@ const ItemDetailForm = ({ index, customers, customersLoaded, doctors, doctorsLoa
     }
 
     const clearCart = () => {
-        saleStatePatcher({ items: [] })
+        saleStatePatcher({ items: [] });
+        toggleClearDialogOpen();
     }
 
     const submit = () => {
